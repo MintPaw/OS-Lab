@@ -1,27 +1,30 @@
 gdt_start:
 
 gdt_null:
-	dd $0x00
-	dd $0x00
+	.long 0
+	.long 0
 
 gdt_code:
-	dw $0xffff
-	dw $0x0
-	db $0x0
-	db 10011010b
-	db 11001111b
-	db 0x0
+	.word $0xffff
+	.word $0x0
+	.byte $0x0
+	.byte $0b10011010
+	.byte $0b11001111
+	.byte $0x0
 
 gdt_data:
-	dw 0xffff
-	dw 0x0
-	db 0x0
-	db 10010010b
-	db 11001111b
-	db 0x0
+	.word $0xffff
+	.word $0x0
+	.byte $0x0
+	.byte $0b10010010
+	.byte $0b11001111
+	.byte $0x0
 
 gdt_end:
 
 gdt_descriptor:
-	dw gdt_end - gdt_start - 1
-	dd gdt_start
+	.word (gdt_end - gdt_start - 1)
+	.long gdt_start
+
+#define CODE_SEG gdt_code - gdt_start
+#define DATA_SEG gdt_data - gdt_start

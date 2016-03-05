@@ -1,5 +1,6 @@
-.code16
+#include "gdt.S"
 
+.code16
 .global start
 
 start:
@@ -15,9 +16,28 @@ start:
 	mov $0x00, %dl
 	int $0x10
 
-loop:
-	jmp loop
+switch_to_pm:
+	cli
+	lgdt gdt_descriptor
+	
+	movl %cr0, %eax
+	orl	 $0x1, %eax
+	movl %eax, %cr0
+	
+	ljmp $CODE_SEG, $init_pm
+	 
 
 str:
 	.ascii "Hello, world!"
 end:
+
+
+.code32
+init_pm:
+	movw $DATA_SEG, %ax
+	movw %ax, %ds
+	movw %ax, %es
+	movw %ax, %ss
+
+	movl $0x8000, %esp
+
