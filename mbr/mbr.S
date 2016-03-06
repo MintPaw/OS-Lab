@@ -2,6 +2,9 @@
 .globl start
 start:
 
+	# BIOS stores the boot drive in DL register, save it.
+	movb		%dl,				BOOT_DRIVE
+
 	# set stack pointer
 	movw		$0x9000,			%bp
 	movw		%bp,				%sp
@@ -21,15 +24,17 @@ load_kernel:
 	
 	movw		$KERNEL_OFFSET,		%bx
 	movb		$15,				%dh
-	#movb		BOOT_DRIVE,			%dl
+	movb		(BOOT_DRIVE),		%dl
 	#call		disk_load
 	ret
 
 #include "print_string_rm.asm"
 
 # Global variables
+BOOT_DRIVE:
+	.byte	0x0
 REAL_MODE_MSG:
-	.string "1. Start at 16-bit Real Mode.\r\n\0";
+	.string "1. Start at 16-bit Real Mode.\r\n\0"
 
 LOAD_KERNEL_MSG:
 	.string "2. Loading kernel into memory.\r\n\0"
