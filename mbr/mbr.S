@@ -5,6 +5,9 @@
 REAL_MODE_MSG:
 	.string "1. Start at 16-bit Real Mode.\0"
 
+LOAD_KERNEL_MSG:
+	.string "2. Loading kernel into memory.\0"
+
 start:
 	jmp loader
 
@@ -18,6 +21,8 @@ test:
 	ret
 
 loader:
-	movw		$REAL_MODE_MSG,	%bx
+	movw		$REAL_MODE_MSG,		%bx
 	call		print_string_rm
 
+	movw		$LOAD_KERNEL_MSG,	%bx
+	call		print_string_rm
