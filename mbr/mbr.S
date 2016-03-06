@@ -1,19 +1,16 @@
 .code16
-.global start
+.globl start
 
-start:	jmp loader
+start:
+	jmp loader
 
-#include "print_string.asm"
+#include "print_string_rm.asm"
+
+# Global variables
+REAL_MODE_MSG:
+	.string "Start at 16-bit Real Mode.\0"
 
 loader:
-
-	xorw	%ax, %ax
-	movw	%ax, %ds
-	movw	%ax, %es
-
-	movw	MSG, %si
-	call	print_string
-
-	#int		$0x12
-
+	movw		REAL_MODE_MSG,	%bx
+	call		print_string_rm
 
