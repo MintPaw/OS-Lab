@@ -10,4 +10,4 @@ run:
 	qemu -curses mbr
 
 clean:
-	rm -f mbr.o gdt.o
+	rm -f mbr.o gdt.o mbr
