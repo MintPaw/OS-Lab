@@ -2,8 +2,8 @@ print_string_rm:
 	pusha
 	
 	loop:
-		mov		(%bx),	%al
-		cmp 	$0,		%al
+		movb	(%bx),	%al
+		cmp 	$0x0,	%al
 		je		return
 		push	%bx
 		mov		$0x0e, %ah
