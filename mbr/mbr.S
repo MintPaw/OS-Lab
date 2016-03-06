@@ -23,21 +23,25 @@ load_kernel:
 	call		print_string_rm
 	
 	movw		$KERNEL_OFFSET,		%bx
-	movb		$15,				%dh
+	movb		$2,					%dh
 	movb		(BOOT_DRIVE),		%dl
-	#call		disk_load
+	call		disk_load
+
+	movw		$READ_DONE_MSG,		%bx
+	call		print_string_rm
 	ret
 
 #include "print_string_rm.asm"
+#include "disk_load.asm"
 
 # Global variables
 BOOT_DRIVE:
 	.byte	0x0
 REAL_MODE_MSG:
 	.string "1. Start at 16-bit Real Mode.\r\n\0"
-
 LOAD_KERNEL_MSG:
 	.string "2. Loading kernel into memory.\r\n\0"
-
+READ_DONE_MSG:
+	.string	"Read done!\r\n\0"
 KERNEL_OFFSET:
 	.word	0x1000
