@@ -27,6 +27,9 @@ load_kernel:
 	movb		(BOOT_DRIVE),		%dl
 	call		disk_load
 
+	mov			$0x0e,				%ah
+	mov			(%bx),				%al
+	int			$0x10
 	movw		$READ_DONE_MSG,		%bx
 	call		print_string_rm
 	ret
