@@ -17,7 +17,7 @@ start:
 	call		load_kernel
 
 	# Switch to 32-bit protected mode
-	call		switch_to_pm
+	# call		switch_to_pm
 	jmp			.
 
 .code16
@@ -36,22 +36,22 @@ load_kernel:
 	pop			%bx
 	ret
 
-switch_to_pm:
-	cli
-	lgdt		gdt_descriptor
-	movl		%cr0,		%eax
-	orl			$0x1,		%eax
-	movl		%eax,		%cr0
-	ljmp		$CODE_SEG,	$init_pm
+#switch_to_pm:
+#	cli
+#	lgdt		gdt_descriptor
+#	movl		%cr0,		%eax
+#	orl			$0x1,		%eax
+#	movl		%eax,		%cr0
+#	ljmp		$CODE_SEG,	$init_pm
 
-init_pm:
-	movw		$DATA_SEG,	%ax
-	movw		%ax,		%ds
-	movw		%ax,		%es
-	movw		%ax,		%ss
-	movl		$0x9000,	%esp
-	movl		%esp,		%ebp
-	call		BEGIN_PM
+#init_pm:
+#	movw		$DATA_SEG,	%ax
+#	movw		%ax,		%ds
+#	movw		%ax,		%es
+#	movw		%ax,		%ss
+#	movl		$0x9000,	%esp
+#	movl		%esp,		%ebp
+#	call		BEGIN_PM
 
 #include "print_string_rm.asm"
 #include "disk_load.asm"
