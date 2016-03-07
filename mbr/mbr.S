@@ -22,7 +22,7 @@ load_kernel:
 	movw		$LOAD_KERNEL_MSG,	%bx
 	call		print_string_rm
 	
-	movw		$KERNEL_OFFSET,		%bx
+	movw		KERNEL_OFFSET,		%bx
 	movb		$2,					%dh
 	movb		(BOOT_DRIVE),		%dl
 	call		disk_load
