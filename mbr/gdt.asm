@@ -23,8 +23,10 @@ gdt_data:
 gdt_end:
 
 gdt_descriptor:
-	.word (gdt_end - gdt_start - 1)
-	.long gdt_start
+	.word ($gdt_end - $gdt_start - 1)
+	.long $gdt_start
 
-#define CODE_SEG gdt_code - gdt_start
-#define DATA_SEG gdt_data - gdt_start
+CODE_SEG:
+	.word	$gdt_code - $gdt_start
+DATA_SEG:
+	.word	$gdt_data - $gdt_start
